@@ -11,10 +11,14 @@ def get_fruityvice_data(fruit_choice):
  return fruityvice_normalized
 
 def get_fruit_load_list():
- my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
- my_cur = my_cnx.cursor()
- my_cur.execute("select * from fruit_load_list")
- return my_cur.fetchall()
+ with my_cnx.cursor() as my_cur:
+  my_cur.execute("select * from fruit_load_list")
+  return my_cur.fetchall()
+
+def insert_fruit_into_load_list(new_fruit):
+ with my_cnx.cursor() as my_cur:
+  my_cur.execute("insert into fruit_load_list values ('"+new_fruit+"')")
+  return "Thanks for adding " + new_fruit
 
 streamlit.title("My parents' new healthy diner")
 streamlit.header("Breakfast Favorites")
@@ -46,7 +50,7 @@ try:
 except URLError as e:
  streamlit.error()
 
-
+my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 streamlit.header("The fruit load list contains:")
 if streamlit.button('Get fruit load list'):
  my_data_rows = get_fruit_load_list()
@@ -56,9 +60,12 @@ streamlit.stop()
 
 try:
  add_my_fruit = streamlit.text_input('What fruit would you like to add?')
- if add_my_fruit:
-  streamlit.write('Thanks for adding ', add_my_fruit)
-  my_cur.execute(f"insert into fruit_load_list values {add_my_fruit}")
+ if streamlit.button('Add fruit to list'):
+  if not add_my_fruit:
+   streamlit.error('Enter a fruit to add to list')
+  else:
+   function_message = insert_fruit_into_load_list(add_my_fruit)
+   streamlit.write(function_message)
 
 except URLError as e:
  streamlit.error()
