@@ -11,7 +11,7 @@ def get_fruityvice_data(fruit_choice):
  return fruityvice_normalized
 
 def get_clothes_list():
- with my_cnx.cusor() as my_cur:
+ with my_cnx.cursor() as my_cur:
    my_cur.execute("select color_or_style from catalog_for_website")
    return my_cur.fetchall()
 
@@ -21,8 +21,6 @@ def insert_fruit_into_load_list(new_fruit):
   return "Thanks for adding " + new_fruit
 
 streamlit.title("Zena's Amazing Athleisure Catalog")
-
-streamlit.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 streamlit.selectbox('Pick a sweatsuit color or style', get_clothes_list())
 
