@@ -19,6 +19,7 @@ def get_clothes_details(clothes_choice):
 streamlit.title("Zena's Amazing Athleisure Catalog")
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 clothes_choice = streamlit.selectbox('Pick a sweatsuit color or style', get_clothes_list())
+get_clothes_details(clothes_choice)
 
 streamlit.stop()
                  
