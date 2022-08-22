@@ -5,25 +5,20 @@ import pandas
 import requests
 from urllib.error import URLError
 
-def get_fruityvice_data(fruit_choice):
- fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
- fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
- return fruityvice_normalized
-
 def get_clothes_list():
  with my_cnx.cursor() as my_cur:
    my_cur.execute("select color_or_style from catalog_for_website")
    clothes = [row[0] for row in my_cur.fetchall()]
    return clothes
 
-def insert_fruit_into_load_list(new_fruit):
+def get_clothes_details(clothes_choice):
  with my_cnx.cursor() as my_cur:
-  my_cur.execute("insert into fruit_load_list values ('"+new_fruit+"')")
-  return "Thanks for adding " + new_fruit
+  my_cur.execute("select direct_url from catalog_for website where color_or_style = '"+clothes_choice+"')")
+  streamlit.write(my_cur.fetchall())
 
 streamlit.title("Zena's Amazing Athleisure Catalog")
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-streamlit.selectbox('Pick a sweatsuit color or style', get_clothes_list())
+clothes_choice = streamlit.selectbox('Pick a sweatsuit color or style', get_clothes_list())
 
 streamlit.stop()
                  
