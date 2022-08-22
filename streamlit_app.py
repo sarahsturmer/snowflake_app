@@ -14,12 +14,13 @@ def get_clothes_list():
 def get_clothes_details(clothes_choice):
  with my_cnx.cursor() as my_cur:
   my_cur.execute("select direct_url, price, size_list, upsell_product_desc from catalog_for_website where color_or_style = '" + clothes_choice + "';")
-  streamlit.write(my_cur.fetchone())
+  return my_cur.fetchone()
 
 streamlit.title("Zena's Amazing Athleisure Catalog")
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 clothes_choice = streamlit.selectbox('Pick a sweatsuit color or style', get_clothes_list())
-get_clothes_details(clothes_choice)
+details_list = get_clothes_details(clothes_choice)
+streamlit.image(details_list[0], width=400)
 
 streamlit.stop()
                  
