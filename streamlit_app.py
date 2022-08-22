@@ -12,7 +12,7 @@ def get_fruityvice_data(fruit_choice):
 
 def get_clothes_list():
  with my_cnx.cusor() as my_cur:
-   my_cur.execute("select color_or_style from catalog_for_website)
+   my_cur.execute("select color_or_style from catalog_for_website")
    return my_cur.fetchall()
 
 def insert_fruit_into_load_list(new_fruit):
