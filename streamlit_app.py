@@ -10,9 +10,9 @@ def get_fruityvice_data(fruit_choice):
  fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
  return fruityvice_normalized
 
-def get_fruit_load_list():
- with my_cnx.cursor() as my_cur:
-  my_cur.execute("select * from fruit_load_list")
+def get_clothes_list():
+with my_cnx.cusor() as my_cur:
+  my_cur.execute("select color_or_style from catalog_for_website)
   return my_cur.fetchall()
 
 def insert_fruit_into_load_list(new_fruit):
@@ -20,16 +20,16 @@ def insert_fruit_into_load_list(new_fruit):
   my_cur.execute("insert into fruit_load_list values ('"+new_fruit+"')")
   return "Thanks for adding " + new_fruit
 
-streamlit.title("My parents' new healthy diner")
-streamlit.header("Breakfast Favorites")
-streamlit.text("🥣  Omega-3 & blueberry oatmeal")
-streamlit.text("🥗 Kale, spinach, and rocket smoothie")
-streamlit.text("🐔 Hard-boiled free-range egg")
-streamlit.text("🥑🍞 Avocado toast")
+streamlit.title("Zena's Amazing Athleisure Catalog")
 
 streamlit.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
-my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
+my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+streamlit.selectbox('Pick a sweatsuit color or style', get_clothes_list())
 
+streamlit.stop()
+                 
+                 
+                 
 my_fruit_list = my_fruit_list.set_index('Fruit')
 # Let's put a pick list here so they can pick the fruit they want to include 
 fruits_selected = streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index), ['Avocado', 'Strawberries'])
