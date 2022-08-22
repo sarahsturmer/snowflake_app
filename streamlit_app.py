@@ -22,7 +22,7 @@ def insert_fruit_into_load_list(new_fruit):
 
 streamlit.title("Zena's Amazing Athleisure Catalog")
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-streamlit.selectbox('Pick a sweatsuit color or style', get_clothes_list())
+streamlit.selectbox('Pick a sweatsuit color or style', **get_clothes_list())
 
 streamlit.stop()
                  
