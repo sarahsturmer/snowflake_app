@@ -20,10 +20,11 @@ streamlit.title("Zena's Amazing Athleisure Catalog")
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 clothes_choice = streamlit.selectbox('Pick a sweatsuit color or style', get_clothes_list())
 details_list = get_clothes_details(clothes_choice)
-streamlit.image(details_list[0], width=400)
+caption = 'Our warm, comfortable ' + clothes_choice + ' sweatsuit!'
+streamlit.image(details_list[0], width=400, caption=caption)
 streamlit.write('Price: ', details_list[1])
 streamlit.write('Sizes available: ', details_list[2])
-strealit.write(details_list[3])
+streamlit.write(details_list[3])
 
 streamlit.stop()
                  
