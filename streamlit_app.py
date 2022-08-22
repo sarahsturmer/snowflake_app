@@ -13,7 +13,7 @@ def get_clothes_list():
 
 def get_clothes_details(clothes_choice):
  with my_cnx.cursor() as my_cur:
-  my_cur.execute("select direct_url from catalog_for_website where color_or_style = " + clothes_choice + ";")
+  my_cur.execute("select direct_url from catalog_for_website where color_or_style = "' + clothes_choice + '";")
   streamlit.write(my_cur.fetchall())
 
 streamlit.title("Zena's Amazing Athleisure Catalog")
